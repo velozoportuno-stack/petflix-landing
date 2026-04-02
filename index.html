@@ -220,9 +220,97 @@ footer a:hover{color:var(--brand);}
   .price-box{padding:28px 32px;}
   .pb-price{font-size:60px;}
 }
+
+/* ===== POPUP ===== */
+#pf-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;}
+#pf-overlay.hidden{display:none;}
+#pf-card{background:#fff;border-radius:20px;max-width:480px;width:100%;padding:36px 32px 32px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.4);}
+#pf-close{position:absolute;top:14px;right:18px;background:none;border:none;font-size:22px;cursor:pointer;color:#888;line-height:1;}
+#pf-close:hover{color:#333;}
+.pf-logo{text-align:center;font-size:14px;font-weight:900;color:#1A1A1A;letter-spacing:.5px;margin-bottom:20px;}
+.pf-block-title{font-size:20px;font-weight:900;color:#1A1A1A;text-align:center;line-height:1.3;margin-bottom:6px;}
+.pf-block-sub{font-size:14px;color:#666;text-align:center;margin-bottom:14px;line-height:1.5;}
+.pf-input{width:100%;padding:12px 14px;border:1.5px solid #E8E0D0;border-radius:10px;font-size:15px;font-family:inherit;outline:none;box-sizing:border-box;}
+.pf-input:focus{border-color:#FF6B35;}
+.pf-btn-orange{width:100%;margin-top:10px;padding:14px;background:linear-gradient(135deg,#FF6B35,#D94F1A);color:#fff;font-size:16px;font-weight:900;border:none;border-radius:10px;cursor:pointer;font-family:inherit;}
+.pf-btn-orange:hover{opacity:.9;}
+.pf-btn-green{width:100%;margin-top:10px;padding:14px;background:linear-gradient(135deg,#06D6A0,#04A87D);color:#fff;font-size:16px;font-weight:900;border:none;border-radius:10px;cursor:pointer;font-family:inherit;}
+.pf-btn-green:hover{opacity:.9;}
+.pf-divider{display:flex;align-items:center;gap:10px;margin:20px 0;}
+.pf-divider::before,.pf-divider::after{content:'';flex:1;height:1px;background:#E8E0D0;}
+.pf-divider span{font-size:12px;font-weight:900;color:#aaa;white-space:nowrap;}
+.pf-msg{font-size:13px;font-weight:700;margin-top:8px;text-align:center;min-height:18px;}
+.pf-msg.ok{color:#06D6A0;}
+.pf-msg.err{color:#E53935;}
+
+/* ===== LEAD BAR ===== */
+#lead-bar{background:linear-gradient(135deg,#1A1A1A,#2D2D2D);padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);}
+.lb-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center;}
+.lb-col{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.lb-label{font-size:13px;font-weight:900;color:#fff;white-space:nowrap;}
+.lb-label em{color:#FF6B35;font-style:normal;}
+.lb-input{flex:1;min-width:160px;padding:9px 12px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;border-radius:8px;font-size:13px;font-family:inherit;outline:none;}
+.lb-input::placeholder{color:rgba(255,255,255,.4);}
+.lb-input:focus{border-color:#FF6B35;}
+.lb-btn-o{padding:9px 16px;background:#FF6B35;color:#fff;font-size:13px;font-weight:900;border:none;border-radius:8px;cursor:pointer;white-space:nowrap;font-family:inherit;}
+.lb-btn-o:hover{background:#D94F1A;}
+.lb-btn-g{padding:9px 16px;background:#06D6A0;color:#fff;font-size:13px;font-weight:900;border:none;border-radius:8px;cursor:pointer;white-space:nowrap;font-family:inherit;}
+.lb-btn-g:hover{background:#04A87D;}
+.lb-msg{font-size:12px;font-weight:700;margin-top:4px;min-height:16px;}
+.lb-msg.ok{color:#06D6A0;}
+.lb-msg.err{color:#ff6b6b;}
+@media(max-width:700px){
+  .lb-inner{grid-template-columns:1fr;}
+  .lb-col{flex-direction:column;align-items:stretch;}
+  .lb-btn-o,.lb-btn-g{width:100%;}
+}
 </style>
 </head>
 <body>
+
+<!-- POPUP -->
+<div id="pf-overlay" class="hidden">
+  <div id="pf-card">
+    <button id="pf-close" onclick="pfClose()" title="Fechar">✕</button>
+    <div class="pf-logo">🐾 Mundo PetFlix</div>
+
+    <div class="pf-block-title">Ganhe AGORA um Ebook de Adestramento <span style="color:#FF6B35;">GRATUITO</span></div>
+    <p class="pf-block-sub">Digite o seu email e receba imediatamente no seu email</p>
+    <input class="pf-input" id="popup-email" type="email" placeholder="O teu melhor email">
+    <div class="pf-msg" id="popup-email-msg"></div>
+    <button class="pf-btn-orange" onclick="pfSubmitEmail()">Quero o Ebook Grátis</button>
+
+    <div class="pf-divider"><span>E MAIS...</span></div>
+
+    <div class="pf-block-title">Acesse <span style="color:#06D6A0;">GRÁTIS</span> por 30 dias a melhor IA Pet do mercado</div>
+    <p class="pf-block-sub">Tire dúvidas, receba receitas, tutoriais e muito mais direto no seu WhatsApp</p>
+    <input class="pf-input" id="popup-whatsapp" type="tel" placeholder="O teu número WhatsApp (ex: 351912345678)">
+    <div class="pf-msg" id="popup-wa-msg"></div>
+    <button class="pf-btn-green" onclick="pfSubmitWA()">Quero Acesso Grátis</button>
+  </div>
+</div>
+
+<!-- LEAD BAR -->
+<div id="lead-bar">
+  <div class="lb-inner">
+    <div>
+      <div class="lb-col">
+        <span class="lb-label">📘 Ebook de Adestramento <em>GRÁTIS</em></span>
+        <input class="lb-input" id="bar-email" type="email" placeholder="O teu melhor email">
+        <button class="lb-btn-o" onclick="barSubmitEmail()">Quero Grátis</button>
+      </div>
+      <div class="lb-msg" id="bar-email-msg"></div>
+    </div>
+    <div>
+      <div class="lb-col">
+        <span class="lb-label">🤖 PetIA <em>GRÁTIS</em> 30 dias</span>
+        <input class="lb-input" id="bar-wa" type="tel" placeholder="WhatsApp (ex: 351912345678)">
+        <button class="lb-btn-g" onclick="barSubmitWA()">Quero Acesso</button>
+      </div>
+      <div class="lb-msg" id="bar-wa-msg"></div>
+    </div>
+  </div>
+</div>
 
 <div class="urgency-bar">
   <div class="ub-inner">
@@ -541,6 +629,62 @@ const bar=document.getElementById('stickyBar');
 window.addEventListener('scroll',function(){
   bar.classList.toggle('show',window.scrollY>600);
 },{passive:true});
+
+/* ===== POPUP ===== */
+function pfClose(){document.getElementById('pf-overlay').classList.add('hidden');}
+document.getElementById('pf-overlay').addEventListener('click',function(e){if(e.target===this)pfClose();});
+if(!sessionStorage.getItem('pf-shown')){
+  setTimeout(function(){
+    document.getElementById('pf-overlay').classList.remove('hidden');
+    sessionStorage.setItem('pf-shown','1');
+  },3000);
+}
+
+const API='https://petflix-automation.vercel.app/api/lead';
+const WA_LINK='https://wa.me/351932565280';
+
+function isEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());}
+function isPhone(v){return v.replace(/\D/g,'').length>=9;}
+
+function showMsg(id,text,type){var el=document.getElementById(id);el.textContent=text;el.className='pf-msg '+type;}
+function showBarMsg(id,text,type){var el=document.getElementById(id);el.textContent=text;el.className='lb-msg '+type;}
+
+async function postLead(payload){
+  try{await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});}
+  catch(e){}
+}
+
+async function pfSubmitEmail(){
+  var val=document.getElementById('popup-email').value;
+  if(!isEmail(val)){showMsg('popup-email-msg','Introduz um email válido','err');return;}
+  await postLead({email:val.trim(),source:'popup_email'});
+  showMsg('popup-email-msg','Enviado! Verifica o teu email ✓','ok');
+  document.getElementById('popup-email').value='';
+}
+
+async function pfSubmitWA(){
+  var val=document.getElementById('popup-whatsapp').value;
+  if(!isPhone(val)){showMsg('popup-wa-msg','Número inválido (mínimo 9 dígitos)','err');return;}
+  await postLead({phone:val.trim(),source:'popup_whatsapp'});
+  showMsg('popup-wa-msg','A redirecionar para o WhatsApp...','ok');
+  setTimeout(function(){window.open(WA_LINK,'_blank');},600);
+}
+
+async function barSubmitEmail(){
+  var val=document.getElementById('bar-email').value;
+  if(!isEmail(val)){showBarMsg('bar-email-msg','Email inválido','err');return;}
+  await postLead({email:val.trim(),source:'bar_email'});
+  showBarMsg('bar-email-msg','Enviado! Verifica o teu email ✓','ok');
+  document.getElementById('bar-email').value='';
+}
+
+async function barSubmitWA(){
+  var val=document.getElementById('bar-wa').value;
+  if(!isPhone(val)){showBarMsg('bar-wa-msg','Número inválido (mínimo 9 dígitos)','err');return;}
+  await postLead({phone:val.trim(),source:'bar_whatsapp'});
+  showBarMsg('bar-wa-msg','A redirecionar para o WhatsApp...','ok');
+  setTimeout(function(){window.open(WA_LINK,'_blank');},600);
+}
 </script>
 
 </body>
